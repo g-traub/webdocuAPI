@@ -1,4 +1,10 @@
-# 12mai-cours-NODEJS BOILER-PLATE
+# API pour le web documentaire
 
-Créer un fichier '.env' contenant :
-PORT = <your-port>
+*projet de fin d'année*
+
+équipe : 
+- Corentin Thibault
+- Peter Yazbeck
+- Imed Saoud
+- Najib Tahar
+- Guillaume Traub
