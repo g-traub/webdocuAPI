@@ -1,5 +1,5 @@
 {
-  "name": "15mai",
+  "name": "webdoc-api",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/g-traub/12mai-cours-node.git"
+    "url": "git+https://github.com/g-traub/webdocuAPI.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/g-traub/12mai-cours-node/issues"
+    "url": "https://github.com/g-traub/webdocuAPI/issues"
   },
-  "homepage": "https://github.com/g-traub/12mai-cours-node#readme",
+  "homepage": "https://github.com/g-traub/webdocuAPI#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "dotenv": "^8.0.0",
