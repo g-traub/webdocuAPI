@@ -7,14 +7,17 @@ const MongoClient = require('mongodb').MongoClient;
 /* 
 Config MongoDB
 */
-// Connection URL
-const url = 'mongodb://localhost:27017';
-const client = new MongoClient(url, { useNewUrlParser: true });
+const user = process.env.MONGO_USER;
+const pswd  = process.env.MONGO_PSWD;
+
+// Connection
+const uri = `mongodb+srv://${user}:${pswd}@cluster0-yiyf6.mongodb.net/test?retryWrites=true&w=majority`;
+const client = new MongoClient(uri, { useNewUrlParser: true });
 
 const mongoConnect = () => {
   return new Promise( (resolve, reject) => {
       client.connect()
-      .then( db => resolve( { db: db, url: url } ))
+      .then( db => resolve( { db: db, url: uri } ))
       .catch( error => reject(`MongoDB not connected`, error) )
   })
 }
@@ -23,7 +26,7 @@ const mongoConnect = () => {
 Export
 */
 module.exports = {
-  client: client,
-  mongoConnect: mongoConnect
+  client,
+  mongoConnect
 }
 //

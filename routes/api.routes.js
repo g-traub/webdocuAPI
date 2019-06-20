@@ -10,9 +10,7 @@ const router = express.Router();
 DB
 */
 const dbName = 'webdocAPI';
-const dbservice = require('../services/db.service');
-
-const client = dbservice.client;
+const {client, mongoConnect} = require('../services/db.service');
 
 /*
 Définition des CRUD
@@ -42,9 +40,6 @@ Définition des CRUD
 
     // CRUD : Read All
     router.get('/blocks', (req, res) => {
-        /**
-         * TODO : vérifier la sécurisation pour mongodb 
-         */
         client.db(dbName).collection('content').find().toArray((err, results)=>{
             // Tester la commande MongoDb
             if(err){ res.send(err) }
@@ -57,9 +52,6 @@ Définition des CRUD
 
     // CRUD : Read one
     router.get('/blocks/:id', (req, res) => {
-        /**
-         * TODO : vérifier la sécurisation pour mongodb 
-         */
         client.db(dbName).collection('content').findOne({id: req.params._id},(err, results)=>{
             // Tester la commande MongoDb
             if(err){ res.send(err) }
@@ -72,9 +64,6 @@ Définition des CRUD
     
     // CRUD : Update
     router.put('/blocks/:id', (req, res) => {
-        /**
-        * TODO : vérifier la sécurisation pour mongodb 
-        */
            // Validate Request
            if(!req.body.content) {
                return res.status(400).send({

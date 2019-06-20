@@ -6,12 +6,11 @@ Importer les composants serveur
     require('dotenv').config();
     const express = require('express');
     const bodyParser = require('body-parser');
-    
+
     //Modules serveur
     const apiRoutes = require('./routes/api.routes');
-    const dbservice = require('./services/db.service');
+    const {client, mongoConnect} = require('./services/db.service');
 
-    const mongoConnect = dbservice.mongoConnect;
 //
 
 /* 
