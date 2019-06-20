@@ -6,27 +6,6 @@ const express = require('express');
 const router = express.Router();
 //
 
- /**
- * TODO : refaire les routes en utilisant mangoose, créer un schema etc...
- */
-
-/* 
-Configuer MongoDB
-*/
-    const MongoClient = require('mongodb').MongoClient;
-    // Connection URL
-    const url = 'mongodb://localhost:27017';
-
-    // Database Name
-    const dbName = 'NodeJScourse';
-    const client = new MongoClient(url, { useNewUrlParser: true });
-    //Connexion à la BDD
-    client.connect(function(err) {
-        if (err) throw err;
-        console.log("Connected successfully to server");
-    })
-//
-
 /*
 Définition des CRUD
 */

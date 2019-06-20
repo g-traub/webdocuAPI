@@ -10,6 +10,7 @@ Importer les composants serveur
     
     //Modules serveur
     const apiRoutes = require('./routes/api.routes');
+    const mongoConnect = require('./services/db.service');
 //
 
 /* 
@@ -30,5 +31,11 @@ Configuration du serveur
 /* 
 Lancer le serveur
 */
-    server.listen( port, () => console.log(`Server is launched on port ${port}`));
+mongoConnect()
+.then( db => {
+    server.listen( port, () => console.log({ server: port, db: db.url }) )
+})
+.catch( dbError => {
+    server.listen( port, () => console.log({ server: port, db: dbError }) )
+})
 //
