@@ -6,7 +6,8 @@ Importer les composants serveur
     require('dotenv').config();
     const express = require('express');
     const bodyParser = require('body-parser');
-
+    const cors = require('cors');
+    
     //Modules serveur
     const apiRoutes = require('./routes/api.routes');
     const {client, mongoConnect} = require('./services/db.service');
@@ -23,6 +24,7 @@ Configuration du serveur
     //Configuration de body-parser
     server.use(bodyParser.json({limit: '10mb'}));
     server.use(bodyParser.urlencoded({ extended: true }));
+    server.use(cors());
 
     //Utilisation des routeurs 
     server.use('/api', apiRoutes);

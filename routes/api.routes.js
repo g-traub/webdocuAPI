@@ -4,6 +4,7 @@ Configurer le module de route
 */
 const express = require('express');
 const router = express.Router();
+ObjectID = require('mongodb').ObjectID;
 //
 
 /* 
@@ -22,7 +23,7 @@ Définition des CRUD
         */
         if(req.body && req.body.title.length > 0 && req.body.content.length > 0){
             //Définition de l'item
-            const item = {title: req.body.title, content: req.body.content};
+            const item = {title: req.body.title, content: req.body.content, url: req.body.url};
             client.db(dbName).collection('content').insertOne(item, null, (err, results) => {
                 if (err) {
                     res.json({ msg: 'Error create', error: err })
@@ -52,7 +53,7 @@ Définition des CRUD
 
     // CRUD : Read one
     router.get('/blocks/:id', (req, res) => {
-        client.db(dbName).collection('content').findOne({id: req.params._id},(err, results)=>{
+        client.db(dbName).collection('content').findOne(ObjectID(req.params.id),(err, results)=>{
             // Tester la commande MongoDb
             if(err){ res.send(err) }
             else { 
@@ -72,12 +73,12 @@ Définition des CRUD
            }
            else{
                 client.db(dbName).collection('content').findOneAndUpdate(
-                   {id: req.params._id},
+                    {_id :ObjectID(req.params.id)},
                    {
                     $set: 
                         {
                             title: req.body.title || "Untitled block",
-                        content: req.body.content
+                            content: req.body.content
                         }  
                    },
                    (err, results)=>{
@@ -92,7 +93,7 @@ Définition des CRUD
     });
      // CRUD : Delete
      router.delete('/blocks/:id', (req, res) => {
-        client.db(dbName).collection('content').findOneAndDelete({id: req.params._id}, (err, results) => {
+        client.db(dbName).collection('content').findOneAndDelete({_id :ObjectID(req.params.id)}, (err, results) => {
             // Tester la commande MongoDb
             if(err){ res.send(err) }
             else{
