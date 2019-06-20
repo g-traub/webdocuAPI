@@ -7,12 +7,15 @@ npm i
 ~~~~
 
 * Créer un fichier .env à la racine du projet, au format :
-
-*exemple*
 ~~~~
 PORT=3000
 MONGO_USER=user
-MONGO_PSWD=password
+MONGO_PSWD=user
+~~~~
+
+* Dans la console :
+~~~~
+npm start
 ~~~~
 
 ## Projet de fin d'année
