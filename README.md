@@ -1,8 +1,22 @@
 # API pour le web documentaire
 
-*projet de fin d'année*
+## Installer
+* Dans la console :
+~~~~
+npm i
+~~~~
 
-équipe : 
+* Créer un fichier .env à la racine du projet, au format :
+
+*exemple*
+~~~~
+PORT=3000
+MONGO_USER=user
+MONGO_PSWD=password
+~~~~
+
+## Projet de fin d'année
+### équipe : 
 - Corentin Thibault
 - Peter Yazbeck
 - Imed Saoud
