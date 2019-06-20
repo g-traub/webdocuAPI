@@ -5,12 +5,13 @@ Importer les composants serveur
     //Class
     require('dotenv').config();
     const express = require('express');
-    const path = require('path');
     const bodyParser = require('body-parser');
     
     //Modules serveur
     const apiRoutes = require('./routes/api.routes');
-    const mongoConnect = require('./services/db.service');
+    const dbservice = require('./services/db.service');
+
+    const mongoConnect = dbservice.mongoConnect;
 //
 
 /* 
@@ -33,7 +34,7 @@ Lancer le serveur
 */
 mongoConnect()
 .then( db => {
-    server.listen( port, () => console.log({ server: port, db: db.url }) )
+    server.listen( port, () => console.log({ server:`Server is launched on port ${port}`, db: db.url }) )
 })
 .catch( dbError => {
     server.listen( port, () => console.log({ server: port, db: dbError }) )

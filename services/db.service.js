@@ -9,8 +9,6 @@ Config MongoDB
 */
 // Connection URL
 const url = 'mongodb://localhost:27017';
-// Database Name
-const dbName = 'webdocuAPI';
 const client = new MongoClient(url, { useNewUrlParser: true });
 
 const mongoConnect = () => {
@@ -24,5 +22,8 @@ const mongoConnect = () => {
 /*
 Export
 */
-module.exports = mongoConnect;
+module.exports = {
+  client: client,
+  mongoConnect: mongoConnect
+}
 //

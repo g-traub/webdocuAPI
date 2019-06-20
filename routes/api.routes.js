@@ -6,21 +6,28 @@ const express = require('express');
 const router = express.Router();
 //
 
+/* 
+DB
+*/
+const dbName = 'webdocAPI';
+const dbservice = require('../services/db.service');
+
+const client = dbservice.client;
+
 /*
 Définition des CRUD
 */
     // CRUD : Create
-    router.post('/article', (req, res) => {
+    router.post('/blocks', (req, res) => {
         /* 
         Vérifier la présence du title et du content dans la req
         */
-       //Modifier la sécurisation pour la req (pour mongodb)
         if(req.body && req.body.title.length > 0 && req.body.content.length > 0){
             //Définition de l'item
             const item = {title: req.body.title, content: req.body.content};
-            client.db(dbName).collection('post').insertOne(item, null, function (error, results) {
-                if (error) {
-                    res.json({ msg: 'Error create', err: error })
+            client.db(dbName).collection('content').insertOne(item, null, (err, results) => {
+                if (err) {
+                    res.json({ msg: 'Error create', error: err })
                 }
                 else{
                     res.json({ msg: 'Create', data: results });
@@ -34,66 +41,76 @@ Définition des CRUD
     });
 
     // CRUD : Read All
-    router.get('/article', (req, res) => {
+    router.get('/blocks', (req, res) => {
         /**
          * TODO : vérifier la sécurisation pour mongodb 
          */
-        client.db(dbName).collection('post').find().toArray((err, articles)=>{
+        client.db(dbName).collection('content').find().toArray((err, results)=>{
             // Tester la commande MongoDb
             if(err){ res.send(err) }
             else{ 
                 // Envoyer les données au format json
-                res.json(articles)
+                res.json(results)
             }
         })
     });
 
     // CRUD : Read one
-    router.get('/article/:title', (req, res) => {
+    router.get('/blocks/:id', (req, res) => {
         /**
          * TODO : vérifier la sécurisation pour mongodb 
          */
-        client.db(dbName).collection('post').findOne({title: req.params.title},(err, articles)=>{
+        client.db(dbName).collection('content').findOne({id: req.params._id},(err, results)=>{
             // Tester la commande MongoDb
             if(err){ res.send(err) }
-            else{ 
+            else { 
                 // Envoyer les données au format json
-                res.json(articles)
+                res.json(results)
             }
         })
     });
     
     // CRUD : Update
-    router.put('/article/:title', (req, res) => {
+    router.put('/blocks/:id', (req, res) => {
         /**
         * TODO : vérifier la sécurisation pour mongodb 
         */
-        // Validate Request
-        if(!req.body.content) {
-            return res.status(400).send({
-                message: "Article content can not be empty"
-            });
-        }
-        else{
-            client.db(dbName).collection('post').update(
-                { title: req.params.title}, 
-                {
-                    title: req.body.title || "Untitled Article",
-                    content: req.body.content
-                },
-                (err, article)=>{
-                // Tester la commande MongoDb
-                if(err){ res.send(err) }
-                else{ 
-                    // Envoyer les données au format json
-                    res.json(article)
-                }
-            })
-        }
+           // Validate Request
+           if(!req.body.content) {
+               return res.status(400).send({
+                   message: "block content can not be empty"
+               });
+           }
+           else{
+                client.db(dbName).collection('content').findOneAndUpdate(
+                   {id: req.params._id},
+                   {
+                    $set: 
+                        {
+                            title: req.body.title || "Untitled block",
+                        content: req.body.content
+                        }  
+                   },
+                   (err, results)=>{
+                   // Tester la commande MongoDb
+                   if(err){ res.send(err) }
+                   else{
+                    res.json({ msg: 'Update', data: results });
+                    console.log("Le document a bien été modifié");
+                }    
+               })
+           }
     });
      // CRUD : Delete
-     router.delete('/article/:id', (req, res) => {
-        res.json({msg: 'Delete one by ID', error: null});
+     router.delete('/blocks/:id', (req, res) => {
+        client.db(dbName).collection('content').findOneAndDelete({id: req.params._id}, (err, results) => {
+            // Tester la commande MongoDb
+            if(err){ res.send(err) }
+            else{
+               res.json({msg: 'Delete one by ID', error: null});
+               console.log("Le document a bien été modifié");
+            } 
+        })
     });
 //
 
@@ -101,4 +118,5 @@ Définition des CRUD
 Exporter le module de route
 */
 module.exports = router;
+
 //
