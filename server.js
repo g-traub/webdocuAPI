@@ -22,6 +22,7 @@ Configuration du serveur
     const port  = process.env.PORT;
     
     //Configuration de body-parser
+    server.use(express.static('public'));
     server.use(bodyParser.json({limit: '10mb'}));
     server.use(bodyParser.urlencoded({ extended: true }));
     server.use(cors());
