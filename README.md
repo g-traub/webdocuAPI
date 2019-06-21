@@ -8,7 +8,7 @@ npm i
 
 * Créer un fichier .env à la racine du projet, au format :
 ~~~~
-PORT=3000
+PORT=3001
 MONGO_USER=user
 MONGO_PSWD=user
 ~~~~
