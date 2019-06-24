@@ -91,7 +91,8 @@ Définition des CRUD
                })
            }
     });
-     // CRUD : Delete
+     
+    // CRUD : Delete
      router.delete('/blocks/:id', (req, res) => {
         client.db(dbName).collection('content').findOneAndDelete({_id :ObjectID(req.params.id)}, (err, results) => {
             // Tester la commande MongoDb
@@ -101,6 +102,26 @@ Définition des CRUD
                console.log("Le document a bien été modifié");
             } 
         })
+    });
+
+    // Connexion
+    router.post('/login', (req, res) => {
+        console.log(req.body);
+        /* 
+        Vérifier la présence du title et du content dans la req
+        */
+       if(req.body){
+        //Définition de l'user
+        const user = {
+            identifiant: req.body.identifiant,
+            motdepasse: req.body.password
+        }
+        res.json({user});
+    }
+    else{
+        res.json({msg: 'login error', error: 'No data'})
+    }
+
     });
 //
 

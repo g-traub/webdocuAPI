@@ -7,6 +7,7 @@ Importer les composants serveur
     const express = require('express');
     const bodyParser = require('body-parser');
     const cors = require('cors');
+    const jwt = require('jsonwebtoken');
     
     //Modules serveur
     const apiRoutes = require('./routes/api.routes');
@@ -17,10 +18,10 @@ Importer les composants serveur
 /* 
 Configuration du serveur
 */
-    //Définir les variables serveur
+    //Variables serveur
     const server = express();
-    const port  = process.env.PORT;
-    
+    const port  = 3001;
+
     //Configuration de body-parser
     server.use(express.static('public'));
     server.use(bodyParser.json({limit: '10mb'}));
@@ -41,4 +42,25 @@ mongoConnect()
 .catch( dbError => {
     server.listen( port, () => console.log({ server: port, db: dbError }) )
 })
+//
+
+/*
+Verifier le token
+*/
+function verifyToken(req, res, next){
+    //Récuperer le token
+    const bearerHeader = req.headers['authorization'];
+    //Vérifier qu'il est défini
+    if(typeof(bearerHeader) !== undefined){
+        //récuperer le token de la valeur retournée
+        const bearer = bearerHeader.split(' ');
+        const bearerToken = bearer[1];
+        req.token = bearerToken;
+        next();
+    }
+    else {
+        //Interdire
+        res.sendStatus(403);
+    }
+}
 //
