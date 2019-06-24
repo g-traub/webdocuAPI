@@ -6,14 +6,7 @@
 npm i
 ~~~~
 
-* Créer un fichier .env à la racine du projet, au format :
-~~~~
-PORT=3000
-MONGO_USER=user
-MONGO_PSWD=user
-~~~~
-
-* Dans la console :
+* Puis :
 ~~~~
 npm start
 ~~~~
