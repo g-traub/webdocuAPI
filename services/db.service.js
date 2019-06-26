@@ -27,6 +27,7 @@ Export
 */
 module.exports = {
   client,
-  mongoConnect
+  mongoConnect,
+  MongoClient
 }
 //

@@ -11,7 +11,7 @@ Importer les composants serveur
     
     //Modules serveur
     const apiRoutes = require('./routes/api.routes');
-    const {client, mongoConnect} = require('./services/db.service');
+    const {client, mongoConnect, MongoClient} = require('./services/db.service');
 
 //
 

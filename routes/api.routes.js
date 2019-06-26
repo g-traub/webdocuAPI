@@ -5,13 +5,15 @@ Configurer le module de route
 const express = require('express');
 const router = express.Router();
 ObjectID = require('mongodb').ObjectID;
+const assert = require('assert');
 //
+
 
 /* 
 DB
 */
 const dbName = 'webdocAPI';
-const {client, mongoConnect} = require('../services/db.service');
+const {client, mongoConnect, MongoClient} = require('../services/db.service');
 
 /*
 Définition des CRUD
@@ -106,20 +108,27 @@ Définition des CRUD
 
     // Connexion
     router.post('/login', (req, res) => {
+       if(req.body && req.body.identifiant && req.body.password){
         console.log(req.body);
-        /* 
-        Vérifier la présence du title et du content dans la req
-        */
-       if(req.body){
-        //Définition de l'user
-        const user = {
-            identifiant: req.body.identifiant,
-            motdepasse: req.body.password
-        }
-        res.json({user});
+
+        //Récupération des id/mdp
+        const user = req.body.identifiant;
+        const pswd  = req.body.password;
+        // Changement de l'url
+        const uri = `mongodb+srv://${user}:${pswd}@cluster0-yiyf6.mongodb.net/test?retryWrites=true&w=majority`;
+        //New client
+        const dbName = "webdocAPI";
+
+        MongoClient.connect(uri, { useNewUrlParser: true }, function (err, client){
+            assert.equal(null, err);
+            const db = client.db(dbName);
+            console.log("Connected successfully to server", db);
+
+            client.close();
+        })
     }
     else{
-        res.json({msg: 'login error', error: 'No data'})
+        res.json({msg: 'login error', error: 'No data'});
     }
 
     });
