@@ -110,7 +110,7 @@ Définition des CRUD
     router.post('/login', (req, res) => {
        if(req.body && req.body.identifiant && req.body.password){
         console.log(req.body);
-
+        
         //Récupération des id/mdp
         const user = req.body.identifiant;
         const pswd  = req.body.password;

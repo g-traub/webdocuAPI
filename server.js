@@ -18,15 +18,18 @@ Importer les composants serveur
 /* 
 Configuration du serveur
 */
+    
+    
     //Variables serveur
     const server = express();
     const port  = 3001;
 
     //Configuration de body-parser
-    server.use(express.static('public'));
     server.use(bodyParser.json({limit: '10mb'}));
     server.use(bodyParser.urlencoded({ extended: true }));
+
     server.use(cors());
+    server.use(express.static('public'));
 
     //Utilisation des routeurs 
     server.use('/api', apiRoutes);
